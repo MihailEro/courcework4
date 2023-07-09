@@ -53,3 +53,46 @@ class HeadHunter(API):
                 'api': 'HeadHunter'
             })
         return formatted_vacancies
+
+
+class SuperJob(API):
+    """Класс для получения данных о вакансиях с сайта SuperJob"""
+    def __init__(self, keyword):
+        self.__header = {'Host': 'api.superjob.ru',
+                         'X-Api-App-Id': 'v3.r.137653568.b73434bb17b7e24ead0ef381257188069e18874d.1efe2061c3488e60e3aa8f5d7ac3399982ef5934'
+                         }
+        self.__params = {
+            "text": keyword,
+            "page": 0,
+            "count": 10
+        }
+        self.__vacancies = []
+
+    @staticmethod
+    def get_salary(salary, currency):
+        formatted_salary = None
+        if salary and salary != 0:
+            formatted_salary = salary if currency == 'rub' else salary
+        return formatted_salary
+
+    def get_request(self):
+        response = requests.get('https://api.superjob.ru/2.0/vacancies', headers=self.__header, params=self.__params)
+        return response.json()['objects']
+
+    def get_vacancies(self, pages_count=1):
+        values = self.get_request()
+        self.__vacancies.extend(values)
+
+    def get_formatted_vacancies(self):
+        formatted_vacancies = []
+        for vacancy in self.__vacancies:
+            formatted_vacancies.append({
+                'id': vacancy['id'],
+                'title': vacancy['profession'],
+                'url': vacancy['link'],
+                'salary_from': self.get_salary(vacancy['payment_from'], vacancy['currency']),
+                'salary_to': self.get_salary(vacancy['payment_to'], vacancy['currency']),
+                'employer': vacancy['firm_name'],
+                'api': 'Superjob'
+            })
+        return formatted_vacancies
