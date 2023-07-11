@@ -22,7 +22,7 @@ class Saver:
     def sort_vacancies_by_salary_from_desk(self):
         vacancies = self.select()
         vacancies = sorted(vacancies, reverse=True)
-        return vacancies
+        return vacancies  # Возвращает остортированый список по зарплате от большей к меньшей
 
     def sort_vacancies_by_salary_from_asc(self):
         vacancies = self.select()

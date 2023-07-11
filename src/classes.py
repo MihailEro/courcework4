@@ -16,9 +16,9 @@ class HeadHunter(API):
     """Класс для получения данных о вакансиях с сайта HeadHunter"""
     def __init__(self, keyword):
         self.__params = {
-            "text": keyword,
-            "page": 0,
-            "per_page": 10
+            "text": keyword,  # слово по которому происходит запрос
+            "page": 0,  # Номер страницы с которой берутся вакансии
+            "per_page": 10  # Колличество вакансий на странице
         }
         self.__vacancies = []
 
@@ -40,6 +40,7 @@ class HeadHunter(API):
         self.__vacancies.extend(values)
 
     def get_formatted_vacancies(self):
+        """Возвращает список вакансий с нужными нами параметрами"""
         formatted_vacancies = []
         for vacancy in self.__vacancies:
             salary_from, salary_to = self.get_salary(vacancy['salary'])
@@ -62,9 +63,9 @@ class SuperJob(API):
                          'X-Api-App-Id': 'v3.r.137653568.b73434bb17b7e24ead0ef381257188069e18874d.1efe2061c3488e60e3aa8f5d7ac3399982ef5934'
                          }
         self.__params = {
-            "text": keyword,
-            "page": 0,
-            "count": 10
+            "text": keyword,  # слово по которому происходит запрос
+            "page": 0,  # Номер страницы с которой берутся вакансии
+            "count": 10  # колличество вакансий на странице
         }
         self.__vacancies = []
 
@@ -84,6 +85,7 @@ class SuperJob(API):
         self.__vacancies.extend(values)
 
     def get_formatted_vacancies(self):
+        """Возвращает список вакансий с нужными нами параметрами"""
         formatted_vacancies = []
         for vacancy in self.__vacancies:
             formatted_vacancies.append({
