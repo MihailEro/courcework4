@@ -28,7 +28,7 @@ def main():
             vacancies = saver.sort_vacancies_by_salary_from_desk()
 
         for vacancy in vacancies:
-            print(vacancy, end='\n\n')
+            print(vacancy, end='\n\n')  # Выводит вакансии
 
 
 if __name__ == '__main__':
